@@ -1,4 +1,4 @@
-package pre1;
+package hip2;
 import javax.swing.*;
 import javax.swing.filechooser.*;
 import java.awt.*;
@@ -12,18 +12,17 @@ import java.text.*;
 import java.awt.print.*;
 public class HomeInventory extends JFrame
 {
-/**
-	 * 
-	 */
+	  
+	 
 	private static final long serialVersionUID = 1L;
-// Toolbar
+
 JToolBar inventoryToolBar = new JToolBar();
-JButton newButton = new JButton(new ImageIcon("C:/Users/Rudra Singh Chouhan/Downloads/red.jpg"));
-JButton deleteButton = new JButton(new ImageIcon("delete.gif"));
-JButton saveButton = new JButton(new ImageIcon("save.gif"));
-JButton previousButton = new JButton(new ImageIcon("previous.gif"));
-JButton nextButton = new JButton(new ImageIcon("next.gif"));
-JButton printButton = new JButton(new ImageIcon("print.gif"));
+JButton newButton = new JButton(new ImageIcon("images/new.png"));
+JButton deleteButton = new JButton(new ImageIcon("images/delete.png"));
+JButton saveButton = new JButton(new ImageIcon("images/save.png"));
+JButton previousButton = new JButton(new ImageIcon("images/previous.png"));
+JButton nextButton = new JButton(new ImageIcon("images/next.png"));
+JButton printButton = new JButton(new ImageIcon("images/print.png"));
 JButton exitButton = new JButton();
 JLabel itemLabel = new JLabel();
 JTextField itemTextField = new JTextField();
@@ -54,12 +53,12 @@ static final int entriesPerPage = 2;
 static int lastPage;
 public static void main(String args[])
 {
-// create frame
+
 new HomeInventory().show();
 }
 public HomeInventory()
 {
-	// frame constructor
+	
 	setTitle("Home Inventory Manager");
 	setResizable(false);
 	setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -439,7 +438,7 @@ public HomeInventory()
 		setBounds((int) (0.5 * (screenSize.width - getWidth())), (int) (0.5 * (screenSize.height -
 		getHeight())), getWidth(), getHeight());
 		int n;
-		// open file for entries
+		
 		try
 		{
 		BufferedReader inputFile = new BufferedReader(new FileReader("inventory.txt"));
@@ -464,7 +463,6 @@ public HomeInventory()
 		myInventory[i].photoFile = inputFile.readLine();
 		}
 		}
-		// read in combo box elements
 		n = Integer.valueOf(inputFile.readLine()).intValue();
 		if (n != 0)
 		{
@@ -497,7 +495,6 @@ if (JOptionPane.showConfirmDialog(null, "Any unsaved changes will be lost.\nAre 
 , "Exit Program", JOptionPane.YES_NO_OPTION,
 JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION)
 return;
-// write entries back to file
 try
 {
 PrintWriter outputFile = new PrintWriter(new BufferedWriter(new
@@ -518,7 +515,6 @@ outputFile.println(myInventory[i].note);
 outputFile.println(myInventory[i].photoFile);
 }
 }
-// write combo box entries
 outputFile.println(locationComboBox.getItemCount());
 if (locationComboBox.getItemCount() != 0)
 {
@@ -559,7 +555,6 @@ showEntry(currentEntry);
 }
 private void saveButtonActionPerformed(ActionEvent e)
 {
-// check for description
 	itemTextField.setText(itemTextField.getText().trim());
 	if (itemTextField.getText().equals(""))
 	{
@@ -570,14 +565,11 @@ private void saveButtonActionPerformed(ActionEvent e)
 	}
 	if (newButton.isEnabled())
 	{
-	// delete edit entry then resave
 	deleteEntry(currentEntry);
 	}
-	// capitalize first letter
 	String s = itemTextField.getText();
 	itemTextField.setText(s.substring(0, 1).toUpperCase() + s.substring(1));
 	numberEntries++;
-	// determine new current entry location based on description
 	currentEntry = 1;
 	if (numberEntries != 1)
 	{
@@ -590,7 +582,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 	}
 	while (currentEntry < numberEntries);
 	}
-	// move all entries below new value down one position unless at end
 	if (currentEntry != numberEntries)
 	{
 	for (int i = numberEntries; i >= currentEntry + 1; i--)
@@ -668,7 +659,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 	int i;
 	if (numberEntries == 0)
 	return;
-	// search for item letter
 	String letterClicked = e.getActionCommand();
 	i = 0;
 	do
@@ -692,7 +682,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 	}
 	private void locationComboBoxActionPerformed(ActionEvent e)
 	{
-	// If in list - exit method
 	if (locationComboBox.getItemCount() != 0)
 	{
 	for (int i = 0; i < locationComboBox.getItemCount(); i++)
@@ -704,7 +693,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 		}
 		}
 		}
-		// If not found, add to list box
 		locationComboBox.addItem(locationComboBox.getSelectedItem());
 		serialTextField.requestFocus();
 		}
@@ -736,7 +724,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 		}
 		private void showEntry(int j)
 		{
-		// display entry j (1 to numberEntries)
 		itemTextField.setText(myInventory[j - 1].description);
 		locationComboBox.setSelectedItem(myInventory[j - 1].location);
 		markedCheckBox.setSelected(myInventory[j - 1].marked);
@@ -791,7 +778,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 			}
 			private void blankValues()
 			{
-			// blank input screen
 			newButton.setEnabled(false);
 			deleteButton.setEnabled(false);
 			saveButton.setEnabled(true);
@@ -812,10 +798,8 @@ private void saveButtonActionPerformed(ActionEvent e)
 			}
 			private void deleteEntry(int j)
 			{
-			// delete entry j
 			if (j != numberEntries)
 			{
-			// move all entries under j up one level
 			for (int i = j; i < numberEntries; i++)
 			{
 			myInventory[i - 1] = new InventoryItem();
@@ -863,10 +847,8 @@ private void saveButtonActionPerformed(ActionEvent e)
 				{
 				Graphics2D g2D = (Graphics2D) g;
 				super.paintComponent(g2D);
-				// draw border
 				g2D.setPaint(Color.BLACK);
 				g2D.draw(new Rectangle2D.Double(0, 0, getWidth() - 1, getHeight() - 1));
-				// show photo
 				Image photoImage = new
 				ImageIcon(HomeInventory.photoTextArea.getText()).getImage();
 				int w = getWidth();
@@ -875,15 +857,12 @@ private void saveButtonActionPerformed(ActionEvent e)
 				double rHeight = (double) getHeight() / (double) photoImage.getHeight(null);
 				if (rWidth > rHeight)
 				{
-				// leave height at display height, change width by amount height is changed
 				w = (int) (photoImage.getWidth(null) * rHeight);
 				}
 				else
 				{
-				// leave width at display width, change height by amount width is changed
 				h = (int) (photoImage.getHeight(null) * rWidth);
 				}
-				// center in panel
 				g2D.drawImage(photoImage, (int) (0.5 * (getWidth() - w)), (int) (0.5 * (getHeight() -
 				h)), w, h, null);
 				g2D.dispose();
@@ -899,12 +878,9 @@ private void saveButtonActionPerformed(ActionEvent e)
 				return NO_SUCH_PAGE;
 				}
 				int i, iEnd;
-				// here you decide what goes on each page and draw it
-				// header
 				g2D.setFont(new Font("Arial", Font.BOLD, 14));
 				g2D.drawString("Home Inventory Items - Page " + String.valueOf(pageIndex + 1),
 				(int) pf.getImageableX(), (int) (pf.getImageableY() + 25));
-				// get starting y
 				int dy = (int) g2D.getFont().getStringBounds("S",
 				g2D.getFontRenderContext()).getHeight();
 				int y = (int) (pf.getImageableY() + 4 * dy);
@@ -913,7 +889,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 				iEnd = HomeInventory.numberEntries;
 				for (i = 0 + HomeInventory.entriesPerPage * pageIndex; i < iEnd; i++)
 				{
-				// dividing line
 				Line2D.Double dividingLine = new
 				Line2D.Double(pf.getImageableX(), y, pf.getImageableX() + pf.getImageableWidth(), y);
 				g2D.draw(dividingLine);
@@ -947,7 +922,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 							y += dy;
 							try
 							{
-							// maintain original width/height ratio
 							Image inventoryImage = new
 							ImageIcon(HomeInventory.myInventory[i].photoFile).getImage();
 							double ratio = (double) (inventoryImage.getWidth(null)) / (double)
@@ -957,7 +931,6 @@ private void saveButtonActionPerformed(ActionEvent e)
 							}
 							catch (Exception ex)
 							{
-							// have place to go in case image file doesn't open
 							}
 							y += 2 * dy + 100;
 							}
